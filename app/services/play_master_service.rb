@@ -41,8 +41,8 @@ class PlayMasterService
   def push_newest_to_heroku
     # code here
     @teams.each do |team|
-      @heroku.create_build("lean-elevator-challenge-#{@team.id}", @team.dsn.gsub(/\.git$/, '/archive/master.tar.gz'))
+      build_url = @heroku.create_build("lean-elevator-challenge-#{@team.id}", @team.dsn.gsub(/\.git$/, '/archive/master.tar.gz'))
+      team.update!(last_deployment: build_url)
     end
-    @dsn = @team.id
   end
 end
