@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171101162138) do
+ActiveRecord::Schema.define(version: 20171101164523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,14 @@ ActiveRecord::Schema.define(version: 20171101162138) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "team_id"
+    t.bigint "round_id"
+    t.index ["round_id"], name: "index_elevator_states_on_round_id"
     t.index ["team_id"], name: "index_elevator_states_on_team_id"
+  end
+
+  create_table "rounds", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "teams", id: :serial, force: :cascade do |t|
@@ -54,6 +61,7 @@ ActiveRecord::Schema.define(version: 20171101162138) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "elevator_states", "rounds"
   add_foreign_key "elevator_states", "teams"
   add_foreign_key "teams", "users"
 end

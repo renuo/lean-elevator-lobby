@@ -1,3 +1,32 @@
 h1 Lean Elevator Challenge
 
-= link_to 'Register now', new_team_path
+h2 Statistics
+
+= javascript_include_tag "http://www.google.com/jsapi", "chartkick"
+
+h3 Total Transports per Team
+= line_chart @transports_per_team
+
+h3 Rounds per Team
+
+ul
+  - @team_performance_per_round.each_pair do |round, elevator_states|
+    li
+      h4 = "Round #{round.id} (#{round.created_at})"
+      table.table.table-striped.table-condensed
+        tr
+          th Team
+          th Current Level
+          th Last Level
+          th Loaded
+          th Unloaded
+          th Total Transported
+
+        - elevator_states.each do |elevator_state|
+          tr
+            th = elevator_state.team.name
+            td = elevator_state.current_level
+            td = elevator_state.last_level
+            td = elevator_state.loaded
+            td = elevator_state.unloaded
+            td = elevator_state.total_transported
