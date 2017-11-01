@@ -1,11 +1,26 @@
 p#notice = notice
 
-p
-  strong Name:
-  = @team.name
-p
-  strong Dsn:
-  = @team.dsn
+h1 = @team.name
+.row
+  p.col-xs-6 = @team.repository
+  p.col-xs-6 = @team.dsn
+
+.logs-container
+  h2 Logs
+
+  pre.logs
+    - @logs.each do |l|
+      = l
+
+  button.btn-default
+    = 'Refresh logs'
+
+
+.statistics
+  h2 Statistics
+
+  button.btn-default
+    = 'Refresh logs'
 
 = link_to 'Edit', edit_team_path(@team)
 '  |
