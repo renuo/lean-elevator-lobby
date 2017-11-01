@@ -6,3 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 User.create!(email: ENV['ADMIN_EMAIL'], password: ENV['ADMIN_PASSWORD'])
+
+['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin'].each do |team|
+  Team.create!(name: team, user: User.first, repository: "https://github.com/renuo/lean-elevators-#{team.downcase}.git")
+end
