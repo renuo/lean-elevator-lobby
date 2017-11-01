@@ -1,5 +1,6 @@
-PATH
-  remote: ../lean-elevators
+GIT
+  remote: https://github.com/renuo/lean-elevators.git
+  revision: e37cb1bffa7760751ce11633713ebd38ba48baab
   specs:
     lean-elevators (0.1.0)
 
