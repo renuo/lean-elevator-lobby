@@ -1,14 +1,21 @@
-module TeamSetupService
+class TeamSetupService
+  attr_reader :dsn
+
   def initialize(team)
     @team = team
   end
 
   def run
-    setup_heroku_app
+    create_heroku_app
+    assign_dsn_to_team
   end
 
   private
-  def setup_heroku_app
-    # code here
+  def create_heroku_app
+  end
+
+
+  def assign_dsn_to_team
+    @team.update!(dsn: @dsn)
   end
 end

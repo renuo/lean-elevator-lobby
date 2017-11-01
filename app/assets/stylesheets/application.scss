@@ -14,4 +14,10 @@
  *= require_self
  */
 @import 'bootstrap-sprockets';
-@import 'bootstrap'
+@import 'bootstrap';
+
+.logs {
+  background: lightgrey;
+  height: 500px;
+  overflow: scroll;
+}
