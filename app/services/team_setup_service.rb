@@ -12,8 +12,9 @@ class TeamSetupService
 
   private
   def create_heroku_app
+    app = HerokuService.new.create_app("lean-elevator-challenge-#{@team.id}")
+    @dsn = app[:web_url]
   end
-
 
   def assign_dsn_to_team
     @team.update!(dsn: @dsn)
