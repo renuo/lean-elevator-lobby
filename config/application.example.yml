@@ -1,0 +1,16 @@
+# Use /etc/hosts to change the dns to 127.0.0.1
+APP_HOST: 'lean-elevator-lobby.dev'
+APP_PORT: '3000'
+
+MAIL_HOST: ''
+MAIL_USERNAME: ''
+MAIL_PASSWORD: ''
+MAIL_SENDER: yourname@renuo.ch
+
+# Secrets
+SECRET_KEY_BASE: 'rake secret'
+DEVISE_SECRET_KEY: 'rake secret'
+DEVISE_PEPPER: 'rake secret'
+
+ADMIN_EMAIL: yourname@renuo.ch
+ADMIN_PASSWORD: 'rake secret'
