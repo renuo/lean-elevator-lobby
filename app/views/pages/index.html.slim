@@ -1,3 +1,16 @@
 h1 Lean Elevator Challenge
 
-= link_to 'Register now', new_team_path
+.row
+  .col-md-6
+    p This is a lean challenge designed by Renuo. It's a game where you group up in teams and then develop an elevator
+      regulation. The team which transported the most people at the end of the day wins.
+
+    p The idea is to experience how to weight between good engineering and being fast.
+
+    = link_to 'Sign up', new_user_registration_path
+    = ' or '
+    = link_to 'Login', new_user_session_path
+
+  .col-md-6
+    = image_tag('lean_cartoon', class: 'img-responsive')
+
