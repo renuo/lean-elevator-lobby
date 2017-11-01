@@ -11,13 +11,17 @@ class TeamsController < ApplicationController
   # GET /teams/1
   # GET /teams/1.json
   def show
-    @logs = read_logs
   end
 
 
   # GET /teams/new
   def new
     @team = Team.new
+  end
+
+  def logs
+    @team = Team.find(params[:id])
+    @logs = Rails.env.production? ? read_heroku_logs : read_local_server_logs
   end
 
   # GET /teams/1/edit
@@ -67,15 +71,14 @@ class TeamsController < ApplicationController
 
   private
 
-  def read_logs
-    if Rails.env.production?
-      # TODO: implement
-      @logs = ''
-      # /apps/{app_id_or_name}/log-sessions
-    else
-      @logs = IO.readlines("#{Rails.root}/log/#{Rails.env}.log").last(100)
-    end
+  def read_local_server_logs
+    IO.readlines("#{Rails.root}/log/#{Rails.env}.log").last(100)
+  end
 
+  def read_heroku_logs()
+    logs_url = HerokuService.new.create_log_session("lean-elevator-challenge-#{@team.id}")
+    res = Net::HTTP.get_response(URI.parse(logs_url))
+    res.body.split('\n')
   end
 
   # Use callbacks to share common setup or constraints between actions.

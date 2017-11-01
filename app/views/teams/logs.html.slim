@@ -1,0 +1,9 @@
+h1 = @team.name
+h2 Logs
+
+pre.logs
+  - @logs.each do |l|
+    = l
+
+button.btn-default
+  = 'Refresh logs'
