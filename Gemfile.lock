@@ -1,3 +1,8 @@
+PATH
+  remote: ../lean-elevators
+  specs:
+    lean-elevators (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -305,6 +310,7 @@ DEPENDENCIES
   factory_girl_rails
   figaro
   jbuilder (~> 2.5)
+  lean-elevators!
   letter_opener
   listen (>= 3.0.5, < 3.2)
   pg
