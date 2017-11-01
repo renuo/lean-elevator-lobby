@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+ruby File.read('.ruby-version').strip
 
 gem 'rails', '~> 5.1.4'
 gem 'pg'
