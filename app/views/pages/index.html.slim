@@ -1,7 +1,9 @@
-h1 Lean Elevator Challenge
+h1 Lean Challenge – Elevators
 
 .row
   .col-md-6
+    h2 Hi there!
+
     p This is a lean challenge designed by Renuo. It's a game where you group up in teams and then develop an elevator
       regulation. The team which transported the most people at the end of the day wins.
 
@@ -10,6 +12,25 @@ h1 Lean Elevator Challenge
     = link_to 'Sign up', new_user_registration_path
     = ' or '
     = link_to 'Login', new_user_session_path
+
+    h2 Getting Started
+
+    p After you registered you can create a team or join an existing one.
+      If you create a new one, think of an awesome name and choose the technology you want to use.
+      It's best to fork one of the following repositories:
+
+    ul
+      li = link_to 'Ruby', 'https://github.com/renuo/lean-elevators-ruby'
+
+    p Configure the Github repository so that heroku can download and deploy your code automatically.
+      The URL you have to provide has to look like that:
+      <code>https://github.com/renuo/lean-elevators-ruby.git</code>
+
+    p After the game has started by the administrator you can push your changes to the configured repo
+      and your application will be called for floor numbers you want to move onto.
+
+    p
+      b Have Fun!
 
   .col-md-6
     = image_tag('lean_cartoon', class: 'img-responsive')
