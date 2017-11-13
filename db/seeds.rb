@@ -16,7 +16,7 @@ end
 
   Team.all.each do |team|
     round.elevator_states << ElevatorState.new(team: team,
-                                               loaded: rand(0..3), unloaded: rand(0..3),
+                                               loaded: rand(0..3), unloaded: rand(0..3), carrying: rand(0..6),
                                                total_transported: rand(50..200),
                                                last_level: rand(0..10), current_level: rand(0..10))
   end
