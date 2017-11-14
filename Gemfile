@@ -35,6 +35,7 @@ end
 group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'letter_opener'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'bootstrap-generators', '~> 3.3.4'
@@ -56,6 +57,3 @@ group :lint do
   gem 'scss_lint', require: false
   gem 'slim_lint', require: false
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

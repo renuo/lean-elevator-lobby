@@ -1,0 +1,10 @@
+h1 = @team.name
+= link_to 'Back', team_path(@team), class: 'btn btn-default'
+h2 Logs
+
+pre.logs
+  - @logs.each do |l|
+    = l
+
+button.btn-default
+  = 'Refresh logs'
