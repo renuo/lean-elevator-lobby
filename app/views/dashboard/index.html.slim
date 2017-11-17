@@ -1,10 +1,10 @@
 h1 Dashboard
 
 - if @team
-  h2 Available Teams
+  h2 Your Team
   ul = render partial: 'user', collection: @team.users
 - else
-  h2 Your Team
+  h2 Available Teams
   - if Team.any?
     ul = render partial: 'team', collection: Team.all
   - else

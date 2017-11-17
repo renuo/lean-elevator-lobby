@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy, :join]
+  before_action :set_team, except: [:index, :create]
 
   # GET /teams
   # GET /teams.json
@@ -12,19 +12,23 @@ class TeamsController < ApplicationController
   def show
   end
 
-
   # GET /teams/new
   def new
     @team = Team.new
   end
 
   def logs
-    @team = Team.find(params[:id])
     @logs = Rails.env.production? ? read_heroku_logs : read_local_server_logs
   end
 
   def join
     @team.users << current_user
+    redirect_to user_root_path
+  end
+
+  def leave
+    @team.users.delete(current_user)
+    redirect_to user_root_path
   end
 
   # GET /teams/1/edit
