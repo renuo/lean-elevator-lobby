@@ -32,7 +32,8 @@ class TeamsController < ApplicationController
   # POST /teams.json
   def create
     @team = Team.new(team_params)
-    @team.user = current_user
+    @team.users << current_user
+    
     respond_to do |format|
       if @team.save
         setup_team(@team)
