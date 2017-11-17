@@ -1,5 +1,5 @@
 class AddUserToTeam < ActiveRecord::Migration[5.1]
   def change
-    add_reference :teams, :user,  foreign_key: true, null: false
+    add_reference :teams, :user, foreign_key: true, null: false
   end
 end

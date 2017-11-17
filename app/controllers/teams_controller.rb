@@ -1,5 +1,4 @@
 class TeamsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_team, only: [:show, :edit, :update, :destroy]
 
   # GET /teams
@@ -33,7 +32,7 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(team_params)
     @team.users << current_user
-    
+
     respond_to do |format|
       if @team.save
         setup_team(@team)
