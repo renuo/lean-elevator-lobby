@@ -1,10 +1,14 @@
 p#notice = notice
 
 h1 = @team.name
-.row
-  p.col-xs-4 = link_to 'Repository', @team.repository
-  p.col-xs-4 = link_to 'App', @team.dsn
-  p.col-xs-4 = link_to 'Logs', logs_team_path(@team)
+
+dl.dl-horizontal
+  dt Repository
+  dd = link_to @team.repository, @team.repository
+  dt App
+  dd = link_to @team.dsn, @team.dsn
+  dt Logs
+  dd = link_to logs_team_path(@team), logs_team_path(@team)
 
 - if @team.last_deployment
   p = link_to 'Last Deployment', @team.last_deployment, target: '_blank'

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :teams do
     get 'logs', on: :member
+    post 'join', on: :member
   end
 
   get 'stats/overall'

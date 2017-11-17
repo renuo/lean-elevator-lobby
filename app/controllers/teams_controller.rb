@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :set_team, only: [:show, :edit, :update, :destroy, :join]
 
   # GET /teams
   # GET /teams.json
@@ -21,6 +21,10 @@ class TeamsController < ApplicationController
   def logs
     @team = Team.find(params[:id])
     @logs = Rails.env.production? ? read_heroku_logs : read_local_server_logs
+  end
+
+  def join
+    @team.users << current_user
   end
 
   # GET /teams/1/edit

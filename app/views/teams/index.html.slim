@@ -7,7 +7,7 @@ h1 Listing teams
         th Name
         th Repository
         th DSN
-        th Creator
+        th Users
         th
         th
         th
@@ -18,7 +18,10 @@ h1 Listing teams
           td = team.name
           td = team.repository
           td = team.dsn
-          td = team.user.email
+          td
+            ul
+              - team.users.pluck(:email).each do |email|
+                li = email
           td = link_to 'Show', team
           td = link_to 'Edit', edit_team_path(team)
           td = link_to 'Destroy', team, data: { confirm: 'Are you sure?' }, method: :delete

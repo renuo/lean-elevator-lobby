@@ -1,2 +1,11 @@
 h1 Dashboard
-p Find me in app/views/dashboard/index.html.slim
+
+- if @team
+  h2 Available Teams
+  ul = render partial: 'user', collection: @team.users
+- else
+  h2 Your Team
+  - if Team.any?
+    ul = render partial: 'team', collection: Team.all
+  - else
+    = link_to 'Build a new team', new_team_path
