@@ -25,7 +25,6 @@ h1 Listing teams
                 li = email
           td = link_to 'Show', team
           td = link_to 'Edit', edit_team_path(team)
-          td = link_to 'Leave', leave_team_path(team), method: :post
           td = link_to 'Destroy', team, data: { confirm: 'Are you sure?' }, method: :delete
 
   br

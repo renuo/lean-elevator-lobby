@@ -2,14 +2,20 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   devise_for :users
+
   get 'dashboard', to: 'dashboard#index', as: :user_root
 
-  resources :teams do
-    get 'logs', on: :member
+  scope 'admin' do
+    resources :teams do
+      get 'logs', on: :member
+    end
+  end
+
+  resource :myteam, controller: :my_team do
     post 'join', on: :member
     post 'leave', on: :member
   end
-
+  
   get 'stats/overall'
   get 'stats/rounds'
   get 'stats/simulator'

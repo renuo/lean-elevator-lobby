@@ -1,2 +1,4 @@
 li
-  = link_to("Join #{team.name}", join_team_path(team), method: :post)
+  = link_to("Join #{team.name}", join_myteam_path(id: team.id), method: :post)
+  '
+  | (#{team.users.pluck(:email).join(', ')})

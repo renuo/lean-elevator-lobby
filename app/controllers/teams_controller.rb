@@ -21,16 +21,6 @@ class TeamsController < ApplicationController
     @logs = Rails.env.production? ? read_heroku_logs : read_local_server_logs
   end
 
-  def join
-    @team.users << current_user
-    redirect_to user_root_path
-  end
-
-  def leave
-    @team.users.delete(current_user)
-    redirect_to user_root_path
-  end
-
   # GET /teams/1/edit
   def edit
   end
@@ -77,6 +67,12 @@ class TeamsController < ApplicationController
     end
   end
 
+  protected
+
+  def set_team
+    @team = Team.find(params[:id])
+  end
+
   private
 
   def read_local_server_logs
@@ -87,11 +83,6 @@ class TeamsController < ApplicationController
     logs_url = HerokuService.new.create_log_session("lean-elevator-challenge-#{@team.id}")
     res = Net::HTTP.get_response(URI.parse(logs_url))
     res.body.split('\n')
-  end
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_team
-    @team = Team.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

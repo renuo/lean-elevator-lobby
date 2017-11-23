@@ -1,0 +1,2 @@
+module MyTeamHelper
+end
