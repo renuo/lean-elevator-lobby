@@ -19,7 +19,7 @@ class TeamsController < ApplicationController
   end
 
   def logs
-    @logs = Rails.env.production? ? read_heroku_logs : read_local_server_logs
+    @logs = read_heroku_logs
   end
 
   # GET /teams/1/edit
@@ -76,12 +76,8 @@ class TeamsController < ApplicationController
 
   private
 
-  def read_local_server_logs
-    IO.readlines("#{Rails.root}/log/#{Rails.env}.log").last(100)
-  end
-
   def read_heroku_logs()
-    logs_url = HerokuService.new.create_log_session("lean-elevator-challenge-#{@team.id}")
+    logs_url = HerokuService.new.create_log_session(@team.decider_app.name)
     res = Net::HTTP.get_response(URI.parse(logs_url))
     res.body.split('\n')
   end

@@ -52,6 +52,4 @@ class PlayMasterService
       team.update!(last_deployment: build_url)
     end
   end
-
-  def decider_url(decider_app)
 end
