@@ -4,7 +4,10 @@
       "scripts": {
         "test-setup": "bin/setup",
         "test": "bin/check"
-      }
+      },
+      "addons":[
+        "heroku-postgresql"
+      ]
     }
   }
 }
