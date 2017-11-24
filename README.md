@@ -1,24 +1,28 @@
-# README
+# Lean Elevators Lobby
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project provides a lobby system for the lean elevator challenge.
+It automatically creates Heroku apps for each team and checks out
+changes in the teams own repositories automatically
 
-Things you may want to cover:
+## Install
 
-* Ruby version
+    bin/setup
 
-* System dependencies
+If you want to create Heroku apps, you need to configure the your API key
+in `HEROKU_AUTH` in the application.yml
 
-* Configuration
+## Run
 
-* Database creation
+    bin/run
 
-* Database initialization
+## Test
 
-* How to run the test suite
+    bin/check
 
-* Services (job queues, cache servers, search engines, etc.)
+## License
 
-* Deployment instructions
+* MIT
+* Copyright Renuo AG 2017
 
-* ...
+
+
