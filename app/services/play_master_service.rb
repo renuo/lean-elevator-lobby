@@ -23,7 +23,7 @@ class PlayMasterService
   end
 
   def play_rounds
-    LeanElevators.run do |building, tick|
+    LeanElevators.run do |building, _tick_number|
       round = Round.create!
       building.elevators.each_with_index do |elevator, index|
         persist_state(elevator, round, @teams[index])
