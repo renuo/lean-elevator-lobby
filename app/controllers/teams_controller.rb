@@ -10,6 +10,7 @@ class TeamsController < ApplicationController
   # GET /teams/1
   # GET /teams/1.json
   def show
+    @decider_app = @team.decider_app
   end
 
   # GET /teams/new
@@ -87,12 +88,11 @@ class TeamsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def team_params
-    params.require(:team).permit(:name, :repository, :dsn)
+    params.require(:team).permit(:name, :repository, :app_name)
   end
 
   def setup_team(team)
     service = TeamSetupService.new(team)
     service.run
-    @team.dsn = service.dsn
   end
 end

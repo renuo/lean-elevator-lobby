@@ -1,23 +1,16 @@
 class TeamSetupService
-  attr_reader :dsn
-
   def initialize(team)
     @team = team
   end
 
   def run
-    create_heroku_app
-    assign_dsn_to_team
+    app = HerokuService.new.create_app(random_app_name)
+    DeciderApp.create!(name: app['name'], web_url: app['web_url'], git_url: app['git_url'], team: @team)
   end
 
   private
-  def create_heroku_app
-    name = "lec-#{SecureRandom.hex(12)}"
-    app = HerokuService.new.create_app(name)
-    @dsn = app[:web_url]
-  end
 
-  def assign_dsn_to_team
-    @team.update!(dsn: @dsn)
+  def random_app_name
+    "lec-#{SecureRandom.hex(12)}"
   end
 end

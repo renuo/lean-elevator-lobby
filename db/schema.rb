@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117135246) do
+ActiveRecord::Schema.define(version: 20171124193444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "decider_apps", force: :cascade do |t|
+    t.string "name"
+    t.string "web_url"
+    t.string "git_url"
+    t.bigint "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_decider_apps_on_team_id"
+  end
 
   create_table "elevator_states", force: :cascade do |t|
     t.integer "loaded"

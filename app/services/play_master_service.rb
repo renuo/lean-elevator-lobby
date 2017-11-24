@@ -3,6 +3,8 @@ require 'lean_elevators'
 class PlayMasterService
   def initialize(teams)
     @teams = teams
+    raise 'Not enough Heroku apps' unless @teams.all?(&:decider_app)
+
     @heroku = HerokuService.new
   end
 
@@ -36,7 +38,7 @@ class PlayMasterService
   def configure_round
     LeanElevators.configure do |config|
       config.building_size = 10
-      config.net_deciders = @teams.map {|team| "#{team.dsn}decide"}
+      config.net_deciders = @teams.map {|team| team.decider_app.dsn }
       config.tick_limit = 10_000
       config.decider_timeout = 0.3
       config.round_delay = 0
@@ -50,4 +52,6 @@ class PlayMasterService
       team.update!(last_deployment: build_url)
     end
   end
+
+  def decider_url(decider_app)
 end
