@@ -12,7 +12,8 @@ class TeamSetupService
 
   private
   def create_heroku_app
-    app = HerokuService.new.create_app("lean-elevator-challenge-#{@team.id}")
+    name = "lec-#{SecureRandom.hex(12)}"
+    app = HerokuService.new.create_app(name)
     @dsn = app[:web_url]
   end
 
