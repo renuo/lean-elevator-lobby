@@ -19,10 +19,7 @@ in `HEROKU_AUTH` in the application.yml
 
     bin/check
 
-## License
+## Copyright
 
-* MIT
-* Copyright Renuo AG 2017
-
-
+Copyright 2017 [Renuo AG](https://renuo.ch)
 
