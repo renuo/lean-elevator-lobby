@@ -1,10 +1,10 @@
 h1 Play Master View
 
-h2 All registered apps
+h2 All Registered Apps
 ul
   - DeciderApp.all.each do |app|
-    li = app.name
+    li #{link_to(app.name, app.web_url)} by team <i>#{link_to(app.team.name, team_path(app.team))}</i>
 
-ul
-  li = link_to 'Start', game_start_path, method: :post
-  li = link_to 'Stop', game_stop_path, method: :post
+ul.list-inline
+  li = link_to 'Start', game_start_path, method: :post, class: 'btn btn-primary'
+  li = link_to 'Stop', game_stop_path, method: :post, class: 'btn btn-primary'
