@@ -1,12 +1,19 @@
 h1 Dashboard
 
 - if @team
-  h2 Your Team
-  = link_to 'Leave', leave_myteam_path, method: :post
-  ul = render partial: 'user', collection: @team.users
+  h2 Team #{@team.name}
+  .panel.panel-default
+    .panel-heading Team Members
+    .panel-body
+      ul.list-inline = render partial: 'user', collection: @team.users
+      = link_to 'I want to leave.', leave_myteam_path, method: :post
+
+  - if @team.decider_app
+    .panel.panel-default
+      .panel-heading Decider App
+      .panel-body = render partial: 'decider_app'
 
 - else
   h2 Available Teams
-  - if Team.any?
-    ul = render partial: 'team', collection: Team.all
+  ul = render partial: 'team', collection: Team.all
   = link_to 'Build a new team', new_myteam_path

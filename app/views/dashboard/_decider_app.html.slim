@@ -1,0 +1,9 @@
+dl.dl-horizontal
+  dt App
+  dd = link_to @team.decider_app.name, @team.decider_app.web_url
+  dt Original Repository
+  dd = link_to @team.repository, @team.repository
+  dt Logs
+  dd = link_to logs_team_path(@team), logs_team_path(@team)
+  dt Last Deployment
+  dd = link_to 'Deployment Log', @team.last_deployment, target: '_blank'

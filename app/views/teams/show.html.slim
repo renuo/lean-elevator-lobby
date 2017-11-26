@@ -13,9 +13,5 @@ dl.dl-horizontal
 - if @team.last_deployment
   p = link_to 'Last Deployment', @team.last_deployment, target: '_blank'
 
-  button.btn-default
-    = 'Refresh logs'
-
-
 = link_to 'Edit', edit_team_path(@team), class: 'btn btn-default'
 = link_to 'Back', teams_path, class: 'btn btn-default'
