@@ -20,6 +20,7 @@ class PlayMasterService
                           total_transported: elevator.statistics,
                           last_level: 0,
                           current_level: elevator.floor_number,
+                          carrying: elevator.people.count,
                           round: round,
                           team: team)
   end
