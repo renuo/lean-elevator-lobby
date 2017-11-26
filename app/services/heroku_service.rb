@@ -15,6 +15,7 @@ class HerokuService
 
   def create_build(app_name, tarball_url)
     build = @heroku.build.create(app_name, { source_blob: { url: tarball_url } })
+    Rails.logger.debug "Heroku app built: #{app_name}"
     # TODO: handle case if failing and log it to somewhere
     build['output_stream_url']
   end

@@ -17,7 +17,7 @@ class TeamSetupService
   end
 
   def push_newest_to_heroku
-    build_url = @heroku.create_build(@team.decider_app.name, tarball_of_github_repo(team.repository))
+    build_url = @heroku.create_build(@team.decider_app.name, tarball_of_github_repo(@team.repository))
     @team.update!(last_deployment: build_url)
   end
 
