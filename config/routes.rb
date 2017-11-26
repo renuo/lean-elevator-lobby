@@ -5,11 +5,10 @@ Rails.application.routes.draw do
 
   get 'dashboard', to: 'dashboard#index', as: :user_root
 
-  get 'game/admin'
-  get 'game/start'
-  get 'game/stop'
-
   scope 'admin' do
+    get 'game/index'
+    post 'game/start'
+    post 'game/stop'
 
     resources :teams do
       get 'logs', on: :member

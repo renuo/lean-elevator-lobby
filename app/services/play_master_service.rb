@@ -4,13 +4,13 @@ class PlayMasterService
   def initialize(teams)
     @teams = teams
     raise 'Not enough Heroku apps' unless @teams.all?(&:decider_app)
+  end
 
-    @heroku = HerokuService.new
+  def setup
+    configure_rounds
   end
 
   def run
-    push_newest_to_heroku
-    configure_round
     play_rounds
   end
 
@@ -30,26 +30,20 @@ class PlayMasterService
       building.elevators.each_with_index do |elevator, index|
         persist_state(elevator, round, @teams[index])
       end
+
+      putc '.'
     end
   end
 
   private
 
-  def configure_round
+  def configure_rounds
     LeanElevators.configure do |config|
       config.building_size = 10
       config.net_deciders = @teams.map {|team| team.decider_app.dsn }
       config.tick_limit = 10_000
       config.decider_timeout = 0.3
       config.round_delay = 0
-    end
-  end
-
-  def push_newest_to_heroku
-    # code here
-    @teams.each do |team|
-      build_url = @heroku.create_build("lean-elevator-challenge-#{team.id}", team.repository.gsub(/\.git$/, '/archive/master.tar.gz'))
-      team.update!(last_deployment: build_url)
     end
   end
 end
