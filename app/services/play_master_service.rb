@@ -28,6 +28,7 @@ class PlayMasterService
       building.elevators.each_with_index do |elevator, index|
         persist_state(elevator, round, @teams[index])
       end
+      ActionCable.server.broadcast('live_stats_channel', message: "#{building}  #{_tick_number}")
     end
   end
 

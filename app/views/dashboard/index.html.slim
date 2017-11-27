@@ -13,6 +13,11 @@ h1 Dashboard
       .panel-heading Decider App
       .panel-body = render partial: 'decider_app'
 
+    .panel.panel-default
+      .panel-heading Live Stats
+      .panel-body
+        pre#live-stats
+
 - else
   h2 Available Teams
   ul = render partial: 'team', collection: Team.all
