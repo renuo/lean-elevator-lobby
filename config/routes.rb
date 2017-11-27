@@ -24,4 +24,6 @@ Rails.application.routes.draw do
   get 'stats/overall'
   get 'stats/rounds'
   get 'stats/simulator'
+  get 'stats/elevator_states'
+  get 'stats/floor_states'
 end

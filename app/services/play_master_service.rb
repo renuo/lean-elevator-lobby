@@ -14,20 +14,28 @@ class PlayMasterService
     play_rounds
   end
 
-  def persist_state(elevator, round, team)
-    ElevatorState.create!(total_transported: elevator.statistics,
-                          current_level: elevator.floor_number,
-                          carrying: elevator.people.count,
-                          round: round,
-                          team: team)
+  def persist_state(building)
+    round = Round.create!
+    BuildingState.create!(round: round,
+                          state_data: {
+                            elevators: building.elevators.map { |elevator|
+                              {
+                                floor_number: elevator.floor_number,
+                                people_carrying: elevator.people.count,
+                                people_transported: elevator.statistics
+                              }
+                            },
+                            floors: building.floors.map { |floor|
+                              {
+                                people_waiting: floor.people.count
+                              }
+                            }
+                          })
   end
 
   def play_rounds
     LeanElevators.run do |building, _tick_number|
-      round = Round.create!
-      building.elevators.each_with_index do |elevator, index|
-        persist_state(elevator, round, @teams[index])
-      end
+      persist_state(building)
       ActionCable.server.broadcast('live_stats_channel', message: "#{building}  #{_tick_number}")
     end
   end
@@ -38,7 +46,7 @@ class PlayMasterService
     LeanElevators.configure do |config|
       config.building_size = 10
       config.net_deciders = @teams.map {|team| team.decider_app.dsn }
-      config.tick_limit = 10_000
+      config.tick_limit = 100
       config.decider_timeout = 0.3
       config.round_delay = 0
     end
