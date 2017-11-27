@@ -3,7 +3,7 @@ h1 Lean Elevator Challenge
 - if Round.any?
   h2 Round #{@round_id}
 
-  pre = @output
+  pre#simulator[data-round=@round_id data-round-max=Round.maximum(:id)] = @output
 
   ul.list-inline
     li
