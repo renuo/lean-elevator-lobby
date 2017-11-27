@@ -7,8 +7,7 @@ class DeciderApp < ApplicationRecord
   end
 
   def deploy_to_heroku
-    tarball_of_github_repo = team.repository.gsub(/\.git$/, '/archive/master.tar.gz')
-    build_url = HerokuService.new.create_build(name, tarball_of_github_repo)
+    build_url = HerokuService.new.create_build(name, team.tarball_of_github_repo)
     team.update!(last_deployment: build_url)
   end
 end

@@ -4,7 +4,7 @@ h1 = @team.name
 
 dl.dl-horizontal
   dt Repository
-  dd = link_to @team.repository, @team.repository
+  dd = link_to @team.extended_git_url, @team.extended_git_url
   dt App
   - if @decider_app
     dd = link_to @decider_app.name, @decider_app.web_url
@@ -13,8 +13,7 @@ dl.dl-horizontal
   dt Logs
   dd = link_to logs_team_path(@team), logs_team_path(@team)
 
-- if @team.last_deployment
-  p = link_to 'Last Deployment', @team.last_deployment, target: '_blank'
+  p = @team.last_deployment ? (link_to 'Deployment Log', @team.last_deployment, target: '_blank') : 'Never'
 
 = link_to 'Edit', edit_team_path(@team), class: 'btn btn-default'
 = link_to 'Back', teams_path, class: 'btn btn-default'

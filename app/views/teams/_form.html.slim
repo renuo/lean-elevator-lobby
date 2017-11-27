@@ -4,7 +4,10 @@
   .form-inputs
     = f.input :name
     - if @team.new_record?
-      = f.input :repository
+      .input-group
+        span[class= 'input-group-addon'] = 'https://github.com/'
+        = f.input :repository, label: false, placeholder: 'e.g. renuo/lean-elevators-ruby'
+      end
 
   .form-actions
     = f.button :submit

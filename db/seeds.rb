@@ -2,7 +2,7 @@ User.create!(email: ENV['ADMIN_EMAIL'], password: ENV['ADMIN_PASSWORD'])
 
 ['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin'].each do |team|
   user = User.create!(email: "#{team.downcase}@example.com", password: '12345678')
-  Team.create!(name: team, users: [user], repository: "https://github.com/renuo/lean-elevators-#{team.downcase}.git")
+  Team.create!(name: team, users: [user], repository: "renuo/lean-elevators-#{team.downcase}")
 end
 
 [3.seconds.ago, 2.seconds.ago, 1.second.ago].each do |time|
