@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/renuo/lean-elevators.git
-  revision: 5c1f3ec7547ba67247088b18b2e4b253dbb32c71
+  revision: f722a63e58f9fceea032b21834100cda3d964c86
   specs:
     lean-elevators (0.1.0)
 
