@@ -6,10 +6,8 @@ $(document).ready ->
       switch e.which
         when 37
           window.location = 'simulator?round_id=' + (round-1) unless round == 1
-          console.log e.which
           break;
         when 39
           window.location = 'simulator?round_id=' + (round+1) unless round==roundMax
-          console.log e.which
           break;
   return
