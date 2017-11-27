@@ -1,8 +1,12 @@
 h1 Editing team
 
-== render 'form'
+- if @team
 
-= link_to 'Show', @team
-'  |
-= link_to 'Back', teams_path
+  == render 'form'
 
+  = link_to 'Show', @team
+  '  |
+  = link_to 'Back', teams_path
+- else
+  p = 'You are in no team at the moment'
+  = link_to 'Sign up for team', user_root_path
