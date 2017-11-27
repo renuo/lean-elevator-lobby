@@ -1,25 +1,21 @@
 h1 Lean Elevator Challenge
 
-h2 Rounds per Team
+h2 Detailed Round Statistics
 
-- if @team_performance_per_round.to_a.length > 0
-  ul
-    - @team_performance_per_round.each_pair do |round, elevator_states|
-      li
-        h4 = "Round #{round.id} (#{round.created_at})"
-        table.table.table-striped.table-condensed
-          tr
-            th Team
-            th Current Level
-            th Carrying
-            th Total Transported
+- if @round_count > 0
+  .panel.panel-default
+    .panel-heading Meta
+    .panel-body
+      dl.dl-horizontal
+        dt Rounds played
+        dd = @round_count
 
-          - elevator_states.each do |elevator_state|
-            tr
-              th = elevator_state.team.name
-              td = elevator_state.current_level
-              td = elevator_state.carrying
-              td = elevator_state.total_transported
+  .panel.panel-default
+    .panel-heading CSV Data
+    .panel-body
+      ul.list-inline
+        li = link_to 'Download Floor States', stats_floor_states_path(format: :csv), class: 'btn btn-primary'
+        li = link_to 'Download Elevator States', stats_elevator_states_path(format: :csv), class: 'btn btn-primary'
 
 - else
   p No rounds played yet.

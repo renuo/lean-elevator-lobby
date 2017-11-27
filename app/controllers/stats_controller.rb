@@ -10,13 +10,17 @@ class StatsController < ApplicationController
     # end
   end
 
+  def rounds
+    @round_count = Round.count
+  end
+
   def simulator
     @round_id = params[:round_id].to_i || Round.minimum(:id)
     return unless Round.exists?(@round_id)
 
-    state_data = Round.find(@round_id).building_state.state_object
-    floors = state_data.floors
-    elevators = state_data.elevators
+    round = Round.find(@round_id)
+    floors = round.building_state.floors
+    elevators = round.building_state.elevators
 
     @output = floors.map.with_index do |floor, level|
       chamber = elevators.map do |elevator|
@@ -35,13 +39,13 @@ class StatsController < ApplicationController
 
   def floor_states
     respond_to do |format|
-      format.csv { send_data floor_states_csv, filename: "floors-#{Date.today}.csv" }
+      format.csv { send_data floor_states_csv, filename: 'floors_per_round.csv' }
     end
   end
 
   def elevator_states
     respond_to do |format|
-      format.csv { send_data elevator_states_csv, filename: "floors-#{Date.today}.csv" }
+      format.csv { send_data elevator_states_csv, filename: 'elevators_per_round.csv' }
     end
   end
 
@@ -49,10 +53,10 @@ class StatsController < ApplicationController
 
   def floor_states_csv
     CSV.generate do |csv|
-      csv << ['Round ID', 'Team ID', 'Current Floor', 'Total Transported']
+      csv << ['Round ID', 'Floor Number', 'People Waiting']
       Round.all.each do |round|
-        round.elevator_states.each do |es|
-          csv << [round.id, es.team_id, es.current_level, es.total_transported]
+        round.building_state.floors.each_with_index do |floor, i|
+          csv << [round.id, i, floor.people_waiting]
         end
       end
     end
@@ -60,10 +64,10 @@ class StatsController < ApplicationController
 
   def elevator_states_csv
     CSV.generate do |csv|
-      csv << ['Round ID', 'Current Number', 'People Waiting']
+      csv << ['Round ID', 'Elevator Number', 'Current Floor', 'People Carrying']
       Round.all.each do |round|
-        round.elevator_states.each do |es|
-          csv << [round.id, es.team_id, es.current_level, es.total_transported]
+        round.building_state.elevators.each_with_index do |elevator, i|
+          csv << [round.id, i, elevator.floor_number, elevator.people_carrying]
         end
       end
     end
