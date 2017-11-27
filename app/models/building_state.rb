@@ -16,10 +16,6 @@ class BuildingState < ApplicationRecord
   validates :state_data, presence: true
   belongs_to :round
 
-  def total_transported_per_elevator
-    state_data.elevators.map(&:people_transported)
-  end
-
   def elevators
     state_object.elevators
   end

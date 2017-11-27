@@ -2,12 +2,22 @@ require 'csv'
 
 class StatsController < ApplicationController
   def overall
+    graph_data = []
 
-    @transports_per_team = []
+    # TODO: nja...
+    BuildingState.all.each do |state|
+      state.elevators.each_with_index do |_elevator, i|
+        graph_data[i] = {name: "Elevator #{i}", data: []}
+      end
+    end
 
-    # @transports_per_team = Team.all.map do |team|
-    #  {name: team.name, data: ElevatorState.where(team_id: team.id).pluck(:round_id, :total_transported)}
-    # end
+    BuildingState.all.each do |state|
+      state.elevators.each_with_index do |elevator, i|
+        graph_data[i][:data].push([state.round_id, elevator.people_transported])
+      end
+    end
+
+    @transports_per_team = graph_data
   end
 
   def rounds
