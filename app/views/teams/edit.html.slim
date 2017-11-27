@@ -4,9 +4,9 @@ h1 Editing team
 
   == render 'form'
 
-  = link_to 'Show', @team
-  '  |
-  = link_to 'Back', teams_path
+  = link_to 'Show Your Team', @team, class: 'btn btn-default'
+  = link_to 'Back', teams_path, class: 'btn btn-default'
+
 - else
   p = 'You are in no team at the moment'
   = link_to 'Sign up for team', user_root_path

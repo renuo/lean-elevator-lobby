@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
     resources :teams do
       get 'logs', on: :member
+      get 'deploy', on: :member
     end
   end
 

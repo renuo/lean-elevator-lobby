@@ -22,6 +22,11 @@ class TeamsController < ApplicationController
     @logs = read_heroku_logs
   end
 
+  def deploy
+    DeployService.new(@team).run
+    redirect_to user_root_path
+  end
+
   # GET /teams/1/edit
   def edit
   end

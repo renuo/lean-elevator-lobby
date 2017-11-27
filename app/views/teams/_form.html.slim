@@ -3,7 +3,8 @@
 
   .form-inputs
     = f.input :name
-    = f.input :repository
+    - if @team.new_record?
+      = f.input :repository
 
   .form-actions
     = f.button :submit

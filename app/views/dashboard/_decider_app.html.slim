@@ -3,7 +3,9 @@ dl.dl-horizontal
   dd = link_to @team.decider_app.name, @team.decider_app.web_url
   dt Original Repository
   dd = link_to @team.repository, @team.repository
-  dt Logs
+  dt Your App-Logs
   dd = link_to logs_team_path(@team), logs_team_path(@team)
   dt Last Deployment
   dd = link_to 'Deployment Log', @team.last_deployment, target: '_blank'
+
+= link_to 'Deploy', deploy_team_path(@team), class: 'btn btn-default'

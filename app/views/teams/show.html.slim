@@ -6,7 +6,10 @@ dl.dl-horizontal
   dt Repository
   dd = link_to @team.repository, @team.repository
   dt App
-  dd = link_to @decider_app.name, @decider_app.web_url
+  - if @decider_app
+    dd = link_to @decider_app.name, @decider_app.web_url
+  - else
+    dd = 'No decider app defined yet'
   dt Logs
   dd = link_to logs_team_path(@team), logs_team_path(@team)
 
