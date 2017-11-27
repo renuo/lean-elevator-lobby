@@ -15,10 +15,7 @@ class PlayMasterService
   end
 
   def persist_state(elevator, round, team)
-    ElevatorState.create!(loaded: 0,
-                          unloaded: 0,
-                          total_transported: elevator.statistics,
-                          last_level: 0,
+    ElevatorState.create!(total_transported: elevator.statistics,
                           current_level: elevator.floor_number,
                           carrying: elevator.people.count,
                           round: round,
@@ -31,8 +28,6 @@ class PlayMasterService
       building.elevators.each_with_index do |elevator, index|
         persist_state(elevator, round, @teams[index])
       end
-
-      putc '.'
     end
   end
 

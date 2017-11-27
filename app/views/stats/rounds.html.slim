@@ -11,20 +11,14 @@ h2 Rounds per Team
           tr
             th Team
             th Current Level
-            th Last Level
             th Carrying
-            th Loaded
-            th Unloaded
             th Total Transported
 
           - elevator_states.each do |elevator_state|
             tr
               th = elevator_state.team.name
               td = elevator_state.current_level
-              td = elevator_state.last_level
               td = elevator_state.carrying
-              td = elevator_state.loaded
-              td = elevator_state.unloaded
               td = elevator_state.total_transported
 
 - else

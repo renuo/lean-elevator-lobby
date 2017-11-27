@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124193444) do
+ActiveRecord::Schema.define(version: 20171127201434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,10 +26,7 @@ ActiveRecord::Schema.define(version: 20171124193444) do
   end
 
   create_table "elevator_states", force: :cascade do |t|
-    t.integer "loaded"
-    t.integer "unloaded"
     t.integer "total_transported"
-    t.integer "last_level"
     t.integer "current_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
