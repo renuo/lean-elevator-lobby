@@ -20,6 +20,16 @@ class BuildingState < ApplicationRecord
     state_data.elevators.map(&:people_transported)
   end
 
+  def elevators
+    state_object.elevators
+  end
+
+  def floors
+    state_object.floors
+  end
+
+  private
+
   def state_object
     JSON.parse(state_data.to_json, object_class: OpenStruct)
   end
