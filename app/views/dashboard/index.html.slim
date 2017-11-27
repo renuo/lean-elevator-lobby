@@ -6,7 +6,7 @@ h1 Dashboard
     .panel-heading Team Members
     .panel-body
       ul.list-inline = render partial: 'user', collection: @team.users
-      = link_to 'I want to leave.', leave_myteam_path, method: :post
+      = link_to 'I want to leave.', leave_myteam_path, method: :post, class: 'btn btn-danger', data: {confirm: 'Are you sure?'}
 
   - if @team.decider_app
     .panel.panel-default

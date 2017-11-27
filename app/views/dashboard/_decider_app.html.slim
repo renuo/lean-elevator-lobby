@@ -8,4 +8,4 @@ dl.dl-horizontal
   dt Last Deployment
   dd = @team.last_deployment ? (link_to 'Deployment Log', @team.last_deployment, target: '_blank') : 'Never'
 
-= link_to 'Deploy', deploy_team_path(@team), class: 'btn btn-default'
+= link_to 'Deploy', deploy_team_path(@team), class: 'btn btn-primary'

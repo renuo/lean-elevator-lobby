@@ -1,11 +1,11 @@
 h1 Editing team
 
 - if @team
+  = link_to 'Back to the Dashboard', user_root_path, class: 'btn btn-default pull-right'
+  div.clearfix
+  hr
 
   == render 'form'
-
-  = link_to 'Show Your Team', @team, class: 'btn btn-default'
-  = link_to 'Back', teams_path, class: 'btn btn-default'
 
 - else
   p = 'You are in no team at the moment'
