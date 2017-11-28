@@ -5,7 +5,7 @@ h1 Dashboard
   .panel.panel-default
     .panel-heading Team Members
     .panel-body
-      ul.list-inline = render partial: 'user', collection: @team.users
+      = render partial: 'user', collection: @team.users
       = link_to 'I want to leave.', leave_myteam_path, method: :post, class: 'btn btn-danger', data: {confirm: 'Are you sure?'}
 
   - if @team.decider_app
@@ -20,5 +20,5 @@ h1 Dashboard
 
 - else
   h2 Available Teams
-  ul = render partial: 'team', collection: Team.all
-  = link_to 'Build a new team', new_myteam_path
+  = render partial: 'team', collection: Team.all
+  = link_to 'Build a new team', new_myteam_path, class: 'btn btn-primary'

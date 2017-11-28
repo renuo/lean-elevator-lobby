@@ -1,4 +1,12 @@
-li
-  = link_to("Join #{team.name}", join_myteam_path(id: team.id), method: :post)
-  '
-  | (#{team.users.pluck(:email).join(', ')})
+div.panel.panel-default
+  .panel-heading.clearfix
+    strong = team.name
+    '
+    | (#{pluralize(team.users.count, 'member')})
+  .panel-body
+    = link_to 'Join Team', join_myteam_path(id: team.id), method: :post, class: 'btn btn-default pull-right'
+    - if team.users
+      p Members:
+      ul
+        - team.users.each do |u|
+          li = u.email
