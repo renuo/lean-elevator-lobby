@@ -10,6 +10,7 @@ nav.navbar.navbar-default role="navigation"
 
     #application-navbar.collapse.navbar-collapse
       ul.nav.navbar-nav
+        li = link_to 'Dashboard', user_root_path
         li = link_to 'Simulator', stats_simulator_path
         li = link_to 'Statistics', stats_overall_path
         li = link_to 'Rounds', stats_rounds_path

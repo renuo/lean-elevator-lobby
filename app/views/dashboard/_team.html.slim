@@ -1,5 +1,8 @@
 div.panel.panel-default
   .panel-heading.clearfix
+    i.fa.fa-2x.fa-users
+    '
+    | &nbsp;
     strong = team.name
     '
     | (#{pluralize(team.users.count, 'member')})

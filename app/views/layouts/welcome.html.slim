@@ -8,6 +8,9 @@ head
   = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 body
   .container
-    p.notice = notice
-    p.alert = alert
+    h1 Lean Challenge – Elevators
+    - if flash[:notice]
+      .alert.alert-info = flash[:notice]
+    - if flash[:alert]
+      .alert.alert-danger = flash[:alert]
     = yield

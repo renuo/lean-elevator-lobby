@@ -6,7 +6,8 @@ h1 Dashboard
     .panel-heading Team Members
     .panel-body
       = render partial: 'user', collection: @team.users
-      = link_to 'I want to leave.', leave_myteam_path, method: :post, class: 'btn btn-danger', data: {confirm: 'Are you sure?'}
+      .clearfix
+        = link_to 'I want to leave.', leave_myteam_path, method: :post, class: 'btn btn-danger pull-right', data: {confirm: 'Are you sure?'}
 
   - if @team.decider_app
     .panel.panel-default
@@ -17,8 +18,14 @@ h1 Dashboard
       .panel-heading Live Stats
       .panel-body
         pre#live-stats = 'No Challenge Running.'
+  - else
+    .alert.alert-danger You have no decider app configured.
 
 - else
   h2 Available Teams
   = render partial: 'team', collection: Team.all
-  = link_to 'Build a new team', new_myteam_path, class: 'btn btn-primary'
+  .panel.panel-primary
+    .panel-heading Build a new team
+    .panel-body
+      p You can also create your own team.
+      = link_to 'Create new team now', new_myteam_path, class: 'btn btn-primary'

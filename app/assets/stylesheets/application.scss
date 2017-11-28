@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  *= require font-awesome
+ *= require devise_bootstrap_views
  */
 @import 'bootstrap-sprockets';
 @import 'bootstrap';

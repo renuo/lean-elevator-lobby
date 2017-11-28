@@ -11,6 +11,8 @@ body
   = render 'layouts/header'
 
   .container
-    p.notice = notice
-    p.alert = alert
+    - if flash[:notice]
+      .alert.alert-info = flash[:notice]
+    - if flash[:alert]
+      .alert.alert-danger = flash[:alert]
     = yield
