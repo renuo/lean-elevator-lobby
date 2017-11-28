@@ -1,18 +1,18 @@
 doctype html
 html
-head
-title Lean Elevator Lobby
-head
-  = csrf_meta_tags
-  = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-  = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-body
+  head
+    title Lean Elevator Lobby
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    meta name="turbolinks-cache-control" content="no-cache"
+  body
 
-  = render 'layouts/header'
+    = render 'layouts/header'
 
-  .container
-    - if flash[:notice]
-      .alert.alert-info = flash[:notice]
-    - if flash[:alert]
-      .alert.alert-danger = flash[:alert]
-    = yield
+    .container
+      - if flash[:notice]
+        .alert.alert-info = flash[:notice]
+      - if flash[:alert]
+        .alert.alert-danger = flash[:alert]
+      = yield
