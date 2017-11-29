@@ -5,6 +5,7 @@ class GameController < ApplicationController
   end
 
   def start
+    Redis.current.set('game_state', 'running')
     game_config = setup_option_params.to_hash.symbolize_keys
     store_game_config_to_session(game_config)
     GameJob.perform_later(game_config)
@@ -12,6 +13,7 @@ class GameController < ApplicationController
   end
 
   def stop
+    Redis.current.set('game_state', 'stopped')
     redirect_to game_index_path
   end
 
