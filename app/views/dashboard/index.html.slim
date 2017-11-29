@@ -14,10 +14,7 @@ h1 Dashboard
       .panel-heading Decider App
       .panel-body = render partial: 'decider_app'
 
-    .panel.panel-default
-      .panel-heading Live Stats
-      .panel-body
-        pre#live-stats = 'No Challenge Running.'
+    = render partial: 'shared/live_stats'
   - else
     .alert.alert-danger You have no decider app configured.
 

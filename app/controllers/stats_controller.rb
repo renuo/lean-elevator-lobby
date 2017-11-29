@@ -30,7 +30,7 @@ class StatsController < ApplicationController
   end
 
   def simulator
-    @round_id = params[:round_id].to_i || Round.minimum(:id)
+    @round_id = params[:round_id] ? params[:round_id].to_i : Round.minimum(:id)
     return unless Round.exists?(@round_id)
 
     round = Round.find(@round_id)
