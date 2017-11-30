@@ -2,21 +2,18 @@ require 'csv'
 
 class StatsController < ApplicationController
   def overall
+    # TODO: Show teams in graph, and what about autoupdate?
     graph_data = []
 
-    # TODO: nja...
-    # @transports_per_team = []
-    # building_state = BuildingState.pluck(:round_id, "state_data -> 'elevators' as elevators")
-    # @transports_per_team = DeciderApp.all.map.with_index do |decider_app, index|
-    #   {name: decider_app.team.name, data: building_state.map { |s| [s.first, s[1][index]['people_transported']] }}
-    # end
-    BuildingState.all.each do |state|
+    building_states = BuildingState.last(1000)
+
+    building_states.each do |state|
       state.elevators.each_with_index do |_elevator, i|
-        graph_data[i] = {name: "Elevator #{i}", data: []}
+        graph_data[i] = { name: "Elevator #{i}", data: [] }
       end
     end
 
-    BuildingState.all.each do |state|
+    building_states.each do |state|
       state.elevators.each_with_index do |elevator, i|
         graph_data[i][:data].push([state.round_id, elevator.people_transported])
       end
