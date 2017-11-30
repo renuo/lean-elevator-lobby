@@ -88,4 +88,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Don't log a lot in production
+  config.lograge.enabled = true
+  ActionCable.server.config.logger = Logger.new(nil)
 end

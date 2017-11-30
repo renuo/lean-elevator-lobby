@@ -28,6 +28,7 @@ class PlayMasterService
   private
 
   def configure_business_logic
+    # Error handling for SocketError needed if net decider wasn't initialized yet
     LeanElevators.configure do |config|
       config.net_deciders = @teams.map {|team| team.decider_app.dsn}
       config.building_size = @options[:building_size].to_i
