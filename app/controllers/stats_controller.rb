@@ -69,7 +69,7 @@ class StatsController < ApplicationController
   def floor_states_csv
     CSV.generate do |csv|
       csv << ['Round ID', 'Floor Number', 'People Waiting']
-      Round.all.each do |round|
+      Round.joins(:building_state).includes(:building_state).all.each do |round|
         round.building_state.floors.each_with_index do |floor, i|
           csv << [round.id, i, floor.people_waiting]
         end
@@ -80,7 +80,7 @@ class StatsController < ApplicationController
   def elevator_states_csv
     CSV.generate do |csv|
       csv << ['Round ID', 'Elevator Number', 'Current Floor', 'People Carrying']
-      Round.all.each do |round|
+      Round.joins(:building_state).includes(:building_state).all.each do |round|
         round.building_state.elevators.each_with_index do |elevator, i|
           csv << [round.id, i, elevator.floor_number, elevator.people_carrying]
         end
