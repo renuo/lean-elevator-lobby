@@ -53,35 +53,51 @@ class StatsController < ApplicationController
 
   def floor_states
     respond_to do |format|
-      format.csv { send_data floor_states_csv, filename: 'floors_per_round.csv' }
+      format.csv do
+        headers["X-Accel-Buffering"] = "no"
+        headers["Cache-Control"] = "no-cache"
+        headers["Content-Type"] = "text/csv; charset=utf-8"
+        headers["Content-Disposition"] = %(attachment; filename="floors_per_round.csv")
+        headers["Last-Modified"] = Time.zone.now.ctime.to_s
+        self.response_body = floor_states_csv_lines
+      end
     end
   end
 
   def elevator_states
     respond_to do |format|
-      format.csv { send_data elevator_states_csv, filename: 'elevators_per_round.csv' }
+      format.csv do
+        headers["X-Accel-Buffering"] = "no"
+        headers["Cache-Control"] = "no-cache"
+        headers["Content-Type"] = "text/csv; charset=utf-8"
+        headers["Content-Disposition"] = %(attachment; filename="elevators_per_round.csv")
+        headers["Last-Modified"] = Time.zone.now.ctime.to_s
+        self.response_body = elevator_states_csv_lines
+      end
     end
   end
 
   private
 
-  def floor_states_csv
-    CSV.generate do |csv|
-      csv << ['Round ID', 'Floor Number', 'People Waiting']
-      Round.joins(:building_state).includes(:building_state).all.each do |round|
-        round.building_state.floors.each_with_index do |floor, i|
-          csv << [round.id, i, floor.people_waiting]
+  def floor_states_csv_lines
+    Enumerator.new do |y|
+      y << CSV.generate_line(['Round ID', 'Floor Number', 'People Waiting'])
+
+      Round.joins(:building_state).includes(:building_state).find_each.lazy.each do |round|
+        round.building_state.floors.map.with_index do |floor, i|
+          y << CSV.generate_line([round.id, i, floor.people_waiting])
         end
       end
     end
   end
 
-  def elevator_states_csv
-    CSV.generate do |csv|
-      csv << ['Round ID', 'Elevator Number', 'Current Floor', 'People Carrying']
-      Round.joins(:building_state).includes(:building_state).all.each do |round|
+  def elevator_states_csv_lines
+    Enumerator.new do |y|
+      y << CSV.generate_line(['Round ID', 'Elevator Number', 'Current Floor', 'People Carrying'])
+
+      Round.joins(:building_state).includes(:building_state).find_each.lazy.each do |round|
         round.building_state.elevators.each_with_index do |elevator, i|
-          csv << [round.id, i, elevator.floor_number, elevator.people_carrying]
+          y << CSV.generate_line([round.id, i, elevator.floor_number, elevator.people_carrying])
         end
       end
     end
