@@ -5,7 +5,7 @@ class StatsController < ApplicationController
     # TODO: Show teams in graph, and what about autoupdate?
     graph_data = []
 
-    building_states = BuildingState.last(1000)
+    building_states = BuildingState.last(100)
 
     building_states.each do |state|
       state.elevators.each_with_index do |_elevator, i|

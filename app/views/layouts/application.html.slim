@@ -7,6 +7,8 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = render 'shared/sentry'
     meta name="turbolinks-cache-control" content="no-cache"
+
+    = yield :head
   body
 
     = render 'layouts/header'
