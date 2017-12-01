@@ -55,7 +55,7 @@ class StatsController < ApplicationController
     respond_to do |format|
       format.csv do
         set_csv_headers('floors_per_round.csv')
-        self.response_body = floor_states_csv_lines
+        self.response_body = floor_states_csv_lines(age_param.ago)
       end
     end
   end
@@ -64,25 +64,7 @@ class StatsController < ApplicationController
     respond_to do |format|
       format.csv do
         set_csv_headers('elevators_per_round.csv')
-        self.response_body = elevator_states_csv_lines
-      end
-    end
-  end
-
-  def all_floor_states
-    respond_to do |format|
-      format.csv do
-        set_csv_headers('all_floors_per_round.csv')
-        self.response_body = File.open(Rails.root.join('tmp', 'all_floors_per_round.csv')).each_line
-      end
-    end
-  end
-
-  def all_elevator_states
-    respond_to do |format|
-      format.csv do
-        set_csv_headers('all_elevators_per_round.csv')
-        self.response_body = File.open(Rails.root.join('tmp', 'all_elevators_per_round.csv')).each_line
+        self.response_body = elevator_states_csv_lines(age_param.ago)
       end
     end
   end
@@ -97,12 +79,16 @@ class StatsController < ApplicationController
 
   private
 
-  def floor_states_csv_lines
+  def age_param
+    (params[:age].to_i || 5).minutes
+  end
+
+  def floor_states_csv_lines(start_at)
     Enumerator.new do |y|
       y << CSV.generate_line(['Round ID', 'Floor Number', 'People Waiting'])
 
       Round.joins(:building_state).includes(:building_state)
-          .where('rounds.created_at > ?', 5.minutes.ago).find_each.lazy.each do |round|
+          .where('rounds.created_at > ?', start_at).find_each.lazy.each do |round|
         round.building_state.floors.map.with_index do |floor, i|
           y << CSV.generate_line([round.id, i, floor.people_waiting])
         end
@@ -110,12 +96,12 @@ class StatsController < ApplicationController
     end
   end
 
-  def elevator_states_csv_lines
+  def elevator_states_csv_lines(start_at)
     Enumerator.new do |y|
       y << CSV.generate_line(['Round ID', 'Elevator Number', 'Current Floor', 'People Carrying'])
 
       Round.joins(:building_state).includes(:building_state)
-          .where('rounds.created_at > ?', 5.minutes.ago).find_each.lazy.each do |round|
+          .where('rounds.created_at > ?', start_at).find_each.lazy.each do |round|
         round.building_state.elevators.each_with_index do |elevator, i|
           y << CSV.generate_line([round.id, i, elevator.floor_number, elevator.people_carrying])
         end

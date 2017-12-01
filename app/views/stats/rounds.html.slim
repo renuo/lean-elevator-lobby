@@ -3,26 +3,38 @@ h1 Lean Elevator Challenge
 h2 Detailed Round Statistics
 
 - if @round_count > 0
-  .panel.panel-default
-    .panel-heading Meta
-    .panel-body
-      dl.dl-horizontal
-        dt Rounds played
-        dd = @round_count
+  .row
+    .col-md-12
+      .panel.panel-default
+        .panel-heading Meta
+        .panel-body
+          dl.dl-horizontal
+            dt Rounds played
+            dd = @round_count
 
-  .panel.panel-default
-    .panel-heading CSV (Last 5 Minutes)
-    .panel-body
-      ul.list-inline
-        li = link_to 'Download Floor States', stats_floor_states_path(format: :csv), class: 'btn btn-primary'
-        li = link_to 'Download Elevator States', stats_elevator_states_path(format: :csv), class: 'btn btn-primary'
+  .row
+    .col-md-6
+      .panel.panel-default
+        .panel-heading Floor State CSV
+        .panel-body
+          i This download may take long
+          = form_tag(stats_floor_states_path(format: :csv), method: 'get')
+            .form-group
+              = label_tag(:age, 'Age in minutes:')
+              = number_field_tag(:age, 5, class: 'form-control', placeholder: '5')
+            = submit_tag('Download Floor States', class: 'btn btn-primary')
 
-  .panel.panel-default
-    .panel-heading CSV (The Whole History)
-    .panel-body
-      ul.list-inline
-        li = link_to 'Download Floor States', stats_all_floor_states_path(format: :csv), class: 'btn btn-primary'
-        li = link_to 'Download Elevator States', stats_all_elevator_states_path(format: :csv), class: 'btn btn-primary'
+
+    .col-md-6
+      .panel.panel-default
+        .panel-heading Elevator State CSV
+        .panel-body
+          i This download may take long
+          = form_tag(stats_elevator_states_path(format: :csv), method: 'get')
+            .form-group
+              = label_tag(:age, 'Age in minutes:')
+              = number_field_tag(:age, 5, class: 'form-control', placeholder: '5')
+            = submit_tag('Download Elevator States', class: 'btn btn-primary')
 
 - else
   p No rounds played yet.
