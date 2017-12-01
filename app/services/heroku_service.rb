@@ -13,6 +13,12 @@ class HerokuService
     end
   end
 
+  def delete_app(app_name)
+    @heroku.app.delete(app_name).tap do
+      Rails.logger.debug "Heroku app deleted: #{app_name}"
+    end
+  end
+
   def create_build(app_name, tarball_url)
     build = @heroku.build.create(app_name, source_blob: { url: tarball_url })
     Rails.logger.debug "Heroku app built: #{app_name}"
