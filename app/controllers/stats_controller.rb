@@ -3,13 +3,14 @@ require 'csv'
 class StatsController < ApplicationController
   def overall_charts
     # TODO: Show teams in graph, and what about autoupdate?
+    team_names = Team.all.order(:id).pluck(:name)
     graph_data = []
 
     building_states = BuildingState.last(200)
 
     building_states.each do |state|
       state.elevators.each_with_index do |_elevator, i|
-        graph_data[i] = { name: "Elevator #{i}", data: [] }
+        graph_data[i] = { name: team_names[i], data: [] }
       end
     end
 
