@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   root 'welcome#index'
 
@@ -26,4 +28,6 @@ Rails.application.routes.draw do
   get 'stats/simulator'
   get 'stats/elevator_states'
   get 'stats/floor_states'
+
+  mount Sidekiq::Web => '/sidekiq'
 end
