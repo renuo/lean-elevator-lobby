@@ -1,7 +1,7 @@
 require 'csv'
 
 class StatsController < ApplicationController
-  def overall
+  def overall_charts
     # TODO: Show teams in graph, and what about autoupdate?
     graph_data = []
 
@@ -19,7 +19,7 @@ class StatsController < ApplicationController
       end
     end
 
-    @transports_per_team = graph_data
+    render json: graph_data.chart_json
   end
 
   def rounds
