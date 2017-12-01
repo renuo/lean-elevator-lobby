@@ -21,8 +21,8 @@ h2 Detailed Round Statistics
     .panel-heading CSV (The Whole History)
     .panel-body
       ul.list-inline
-        li = link_to 'Download Floor States', '/floors_per_round.csv', class: 'btn btn-primary'
-        li = link_to 'Download Elevator States', '/elevators_per_round.csv', class: 'btn btn-primary'
+        li = link_to 'Download Floor States', stats_all_floor_states_path(format: :csv), class: 'btn btn-primary'
+        li = link_to 'Download Elevator States', stats_all_elevator_states_path(format: :csv), class: 'btn btn-primary'
 
 - else
   p No rounds played yet.

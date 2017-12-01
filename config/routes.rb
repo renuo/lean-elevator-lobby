@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   get 'stats/simulator'
   get 'stats/elevator_states'
   get 'stats/floor_states'
+  get 'stats/all_elevator_states'
+  get 'stats/all_floor_states'
 
   mount Sidekiq::Web => '/sidekiq'
 end

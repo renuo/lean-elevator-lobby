@@ -59,10 +59,10 @@ class PersistorService
   end
 
   def floors_csv_path
-    Rails.root.join('public', 'floors_per_round.csv')
+    Rails.root.join('tmp', 'all_floors_per_round.csv')
   end
 
   def elevators_csv_path
-    Rails.root.join('public', 'elevators_per_round.csv')
+    Rails.root.join('tmp', 'all_elevators_per_round.csv')
   end
 end

@@ -54,11 +54,7 @@ class StatsController < ApplicationController
   def floor_states
     respond_to do |format|
       format.csv do
-        headers["X-Accel-Buffering"] = "no"
-        headers["Cache-Control"] = "no-cache"
-        headers["Content-Type"] = "text/csv; charset=utf-8"
-        headers["Content-Disposition"] = %(attachment; filename="floors_per_round.csv")
-        headers["Last-Modified"] = Time.zone.now.ctime.to_s
+        set_csv_headers('floors_per_round.csv')
         self.response_body = floor_states_csv_lines
       end
     end
@@ -67,14 +63,36 @@ class StatsController < ApplicationController
   def elevator_states
     respond_to do |format|
       format.csv do
-        headers["X-Accel-Buffering"] = "no"
-        headers["Cache-Control"] = "no-cache"
-        headers["Content-Type"] = "text/csv; charset=utf-8"
-        headers["Content-Disposition"] = %(attachment; filename="elevators_per_round.csv")
-        headers["Last-Modified"] = Time.zone.now.ctime.to_s
+        set_csv_headers('elevators_per_round.csv')
         self.response_body = elevator_states_csv_lines
       end
     end
+  end
+
+  def all_floor_states
+    respond_to do |format|
+      format.csv do
+        set_csv_headers('all_floors_per_round.csv')
+        self.response_body = File.open(Rails.root.join('tmp', 'all_floors_per_round.csv')).each_line
+      end
+    end
+  end
+
+  def all_elevator_states
+    respond_to do |format|
+      format.csv do
+        set_csv_headers('all_elevators_per_round.csv')
+        self.response_body = File.open(Rails.root.join('tmp', 'all_elevators_per_round.csv')).each_line
+      end
+    end
+  end
+
+  def set_csv_headers(filename)
+    headers["X-Accel-Buffering"] = "no"
+    headers["Cache-Control"] = "no-cache"
+    headers["Content-Type"] = "text/csv; charset=utf-8"
+    headers["Content-Disposition"] = %(attachment; filename="#{filename}")
+    headers["Last-Modified"] = Time.zone.now.ctime.to_s
   end
 
   private
