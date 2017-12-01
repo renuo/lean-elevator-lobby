@@ -20,10 +20,8 @@ class PlayMasterService
   end
 
   def play_rounds
-    persistor = PersistorService.new
-
     LeanElevators.run do |building, tick_number|
-      persistor.store_state(building)
+      PersistorService.store_state(building)
       ActionCable.server.broadcast('live_stats_channel', building: building.to_s, tick_number: tick_number)
     end
   end
