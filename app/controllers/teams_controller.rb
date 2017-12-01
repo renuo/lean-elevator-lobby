@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :set_team, except: [:index, :create]
+  before_action :set_team, except: %i[index create]
 
   # GET /teams
   # GET /teams.json
@@ -28,8 +28,7 @@ class TeamsController < ApplicationController
   end
 
   # GET /teams/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /teams
   # POST /teams.json
@@ -40,11 +39,11 @@ class TeamsController < ApplicationController
     respond_to do |format|
       if @team.save
         setup_team(@team)
-        format.html {redirect_to user_root_url, notice: 'Team was successfully created.'}
-        format.json {render :show, status: :created, location: @team}
+        format.html { redirect_to user_root_url, notice: 'Team was successfully created.' }
+        format.json { render :show, status: :created, location: @team }
       else
-        format.html {render :new}
-        format.json {render json: @team.errors, status: :unprocessable_entity}
+        format.html { render :new }
+        format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -54,11 +53,11 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
-        format.html {redirect_to user_root_url, notice: 'Team was successfully updated.'}
-        format.json {render :show, status: :ok, location: @team}
+        format.html { redirect_to user_root_url, notice: 'Team was successfully updated.' }
+        format.json { render :show, status: :ok, location: @team }
       else
-        format.html {render :edit}
-        format.json {render json: @team.errors, status: :unprocessable_entity}
+        format.html { render :edit }
+        format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -68,8 +67,8 @@ class TeamsController < ApplicationController
   def destroy
     @team.destroy
     respond_to do |format|
-      format.html {redirect_to user_root_url, notice: 'Team was successfully destroyed.'}
-      format.json {head :no_content}
+      format.html { redirect_to user_root_url, notice: 'Team was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
@@ -81,7 +80,7 @@ class TeamsController < ApplicationController
 
   private
 
-  def read_heroku_logs()
+  def read_heroku_logs
     logs_url = HerokuService.new.create_log_session(@team.decider_app.name)
     res = Net::HTTP.get_response(URI.parse(logs_url))
     res.body.split('\n')

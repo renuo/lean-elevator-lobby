@@ -1,5 +1,5 @@
 class DeciderApp < ApplicationRecord
-  validates_presence_of :name, :web_url, :git_url
+  validates :name, :web_url, :git_url, presence: true
   belongs_to :team
 
   def dsn

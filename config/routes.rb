@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     post 'join', on: :member
     post 'leave', on: :member
   end
-  
+
   get 'stats/overall'
   get 'stats/rounds'
   get 'stats/simulator'

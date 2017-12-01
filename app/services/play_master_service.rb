@@ -21,7 +21,7 @@ class PlayMasterService
   def play_rounds
     LeanElevators.run do |building, tick_number|
       persist_state(building)
-      ActionCable.server.broadcast('live_stats_channel', { building: building.to_s, tick_number: tick_number})
+      ActionCable.server.broadcast('live_stats_channel', building: building.to_s, tick_number: tick_number)
     end
   end
 
@@ -30,7 +30,7 @@ class PlayMasterService
   def configure_business_logic
     # Error handling for SocketError needed if net decider wasn't initialized yet
     LeanElevators.configure do |config|
-      config.net_deciders = @teams.map {|team| team.decider_app.dsn}
+      config.net_deciders = @teams.map { |team| team.decider_app.dsn }
       config.building_size = @options[:building_size].to_i
       config.decider_timeout = @options[:decider_timeout].to_f
       config.round_delay = @options[:round_delay].to_i
@@ -42,18 +42,18 @@ class PlayMasterService
     round = Round.create!
     BuildingState.create!(round: round,
                           state_data: {
-                            elevators: building.elevators.map {|elevator|
+                            elevators: building.elevators.map do |elevator|
                               {
                                 floor_number: elevator.floor_number,
                                 people_carrying: elevator.people.count,
                                 people_transported: elevator.statistics
                               }
-                            },
-                            floors: building.floors.map {|floor|
+                            end,
+                            floors: building.floors.map do |floor|
                               {
                                 people_waiting: floor.people.count
                               }
-                            }
+                            end
                           })
   end
 end

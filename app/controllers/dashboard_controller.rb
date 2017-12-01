@@ -1,8 +1,7 @@
 class DashboardController < ApplicationController
   before_action :set_team
 
-  def index
-  end
+  def index; end
 
   private
 

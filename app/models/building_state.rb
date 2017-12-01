@@ -16,13 +16,9 @@ class BuildingState < ApplicationRecord
   validates :state_data, presence: true
   belongs_to :round
 
-  def elevators
-    state_object.elevators
-  end
+  delegate :elevators, to: :state_object
 
-  def floors
-    state_object.floors
-  end
+  delegate :floors, to: :state_object
 
   private
 
