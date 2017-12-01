@@ -1,11 +1,11 @@
 require 'csv'
 
 class StatsController < ApplicationController
-  def overall
+  def overall_charts
     # TODO: Show teams in graph, and what about autoupdate?
     graph_data = []
 
-    building_states = BuildingState.last(100)
+    building_states = BuildingState.last(200)
 
     building_states.each do |state|
       state.elevators.each_with_index do |_elevator, i|
@@ -19,7 +19,7 @@ class StatsController < ApplicationController
       end
     end
 
-    @transports_per_team = graph_data
+    render json: graph_data.chart_json
   end
 
   def rounds
