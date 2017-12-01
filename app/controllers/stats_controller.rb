@@ -35,6 +35,8 @@ class StatsController < ApplicationController
     elevators = round.building_state.elevators
 
     @output = floors.map.with_index do |floor, level|
+      floor_label = level.to_s.rjust(3)
+
       chamber = elevators.map do |elevator|
         if level == elevator.floor_number
           "[#{elevator.people_carrying}]"
@@ -45,8 +47,8 @@ class StatsController < ApplicationController
 
       waiting_people = '웃' * floor.people_waiting
 
-      "  █ #{chamber} █ #{waiting_people}"
-    end.join("\n")
+      "#{floor_label} █ #{chamber} █ #{waiting_people}"
+    end.reverse.join("\n")
   end
 
   def floor_states
