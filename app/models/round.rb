@@ -1,3 +1,3 @@
 class Round < ApplicationRecord
-  has_many :elevator_states
+  has_one :building_state, dependent: :destroy
 end

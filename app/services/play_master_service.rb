@@ -1,53 +1,41 @@
 require 'lean_elevators'
+require 'csv'
 
 class PlayMasterService
-  def initialize(teams)
-    @teams = teams
-    @heroku = HerokuService.new
+  def self.default_setup_options
+    {
+      building_size: 10,
+      decider_timeout: 0.3,
+      round_delay: 0,
+      round_limit: 10
+    }
   end
 
-  def run
-    push_newest_to_heroku
-    configure_round
+  def initialize(teams, options = {})
+    @teams = teams
+    raise 'Not enough Heroku apps' unless @teams.all?(&:decider_app)
+    @options = PlayMasterService.default_setup_options.merge(options)
+    configure_business_logic
     play_rounds
   end
 
-  def persist_state(elevator, round, team)
-    ElevatorState.create!(loaded: 0,
-                          unloaded: 0,
-                          total_transported: elevator.statistics,
-                          last_level: 0,
-                          current_level: elevator.floor_number,
-                          round: round,
-                          team: team)
-  end
-
   def play_rounds
-    LeanElevators.run do |building, _tick_number|
-      round = Round.create!
-      building.elevators.each_with_index do |elevator, index|
-        persist_state(elevator, round, @teams[index])
-      end
+    LeanElevators.run do |building, tick_number|
+      PersistorService.store_state(building)
+      ActionCable.server.broadcast('live_stats_channel', building: building.to_s, tick_number: tick_number)
     end
   end
 
   private
 
-  def configure_round
+  def configure_business_logic
+    # Error handling for SocketError needed if net decider wasn't initialized yet
     LeanElevators.configure do |config|
-      config.building_size = 10
-      config.net_deciders = @teams.map {|team| "#{team.dsn}decide"}
-      config.tick_limit = 10_000
-      config.decider_timeout = 0.3
-      config.round_delay = 0
-    end
-  end
-
-  def push_newest_to_heroku
-    # code here
-    @teams.each do |team|
-      build_url = @heroku.create_build("lean-elevator-challenge-#{team.id}", team.repository.gsub(/\.git$/, '/archive/master.tar.gz'))
-      team.update!(last_deployment: build_url)
+      config.net_deciders = @teams.map { |team| team.decider_app.dsn }
+      config.building_size = @options[:building_size].to_i
+      config.decider_timeout = @options[:decider_timeout].to_f
+      config.round_delay = @options[:round_delay].to_i
+      config.tick_limit = @options[:round_limit].to_i
     end
   end
 end

@@ -1,22 +1,17 @@
-class TeamSetupService
-  attr_reader :dsn
-
+class TeamSetupService < DeployService
   def initialize(team)
-    @team = team
+    super(team)
   end
 
   def run
-    create_heroku_app
-    assign_dsn_to_team
+    app = @heroku.create_app(random_app_name)
+    DeciderApp.create!(name: app['name'], web_url: app['web_url'], git_url: app['git_url'], team: @team)
+    push_newest_to_heroku
   end
 
   private
-  def create_heroku_app
-    app = HerokuService.new.create_app("lean-elevator-challenge-#{@team.id}")
-    @dsn = app[:web_url]
-  end
 
-  def assign_dsn_to_team
-    @team.update!(dsn: @dsn)
+  def random_app_name
+    "lec-#{SecureRandom.hex(12)}"
   end
 end

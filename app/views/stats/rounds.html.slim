@@ -1,29 +1,40 @@
 h1 Lean Elevator Challenge
 
-h2 Rounds per Team
+h2 Detailed Round Statistics
 
-- if @team_performance_per_round.to_a.length > 0
-  ul
-    - @team_performance_per_round.each_pair do |round, elevator_states|
-      li
-        h4 = "Round #{round.id} (#{round.created_at})"
-        table.table.table-striped.table-condensed
-          tr
-            th Team
-            th Current Level
-            th Last Level
-            th Loaded
-            th Unloaded
-            th Total Transported
+- if @round_count > 0
+  .row
+    .col-md-12
+      .panel.panel-default
+        .panel-heading Meta
+        .panel-body
+          dl.dl-horizontal
+            dt Rounds played
+            dd = @round_count
 
-          - elevator_states.each do |elevator_state|
-            tr
-              th = elevator_state.team.name
-              td = elevator_state.current_level
-              td = elevator_state.last_level
-              td = elevator_state.loaded
-              td = elevator_state.unloaded
-              td = elevator_state.total_transported
+  .row
+    .col-md-6
+      .panel.panel-default
+        .panel-heading Floor State CSV
+        .panel-body
+          i This download may take long
+          = form_tag(stats_floor_states_path(format: :csv), method: 'get')
+            .form-group
+              = label_tag(:age, 'Age in minutes:')
+              = number_field_tag(:age, 5, class: 'form-control', placeholder: '5')
+            = submit_tag('Download Floor States', class: 'btn btn-primary')
+
+
+    .col-md-6
+      .panel.panel-default
+        .panel-heading Elevator State CSV
+        .panel-body
+          i This download may take long
+          = form_tag(stats_elevator_states_path(format: :csv), method: 'get')
+            .form-group
+              = label_tag(:age, 'Age in minutes:')
+              = number_field_tag(:age, 5, class: 'form-control', placeholder: '5')
+            = submit_tag('Download Elevator States', class: 'btn btn-primary')
 
 - else
   p No rounds played yet.

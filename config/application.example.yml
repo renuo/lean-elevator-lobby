@@ -15,4 +15,9 @@ DEVISE_PEPPER: 'rake secret'
 ADMIN_EMAIL: yourname@renuo.ch
 ADMIN_PASSWORD: 'rake secret'
 
-HEROKU_AUTH: 'secret'
+HEROKU_API_KEY: 'secret'
+HEROKU_SLAVE_PIPELINE_ID: ''
+REDIS_URL: 'redis://localhost:6379'
+
+SENTRY_DSN: ''
+SENTRY_PUBLIC_DSN: ''

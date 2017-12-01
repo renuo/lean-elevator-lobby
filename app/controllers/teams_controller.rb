@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :set_team, except: [:index, :create]
+  before_action :set_team, except: %i[index create]
 
   # GET /teams
   # GET /teams.json
@@ -10,6 +10,7 @@ class TeamsController < ApplicationController
   # GET /teams/1
   # GET /teams/1.json
   def show
+    @decider_app = @team.decider_app
   end
 
   # GET /teams/new
@@ -18,12 +19,16 @@ class TeamsController < ApplicationController
   end
 
   def logs
-    @logs = Rails.env.production? ? read_heroku_logs : read_local_server_logs
+    @logs = read_heroku_logs
+  end
+
+  def deploy
+    DeployService.new(@team).run
+    redirect_to user_root_path
   end
 
   # GET /teams/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /teams
   # POST /teams.json
@@ -34,11 +39,11 @@ class TeamsController < ApplicationController
     respond_to do |format|
       if @team.save
         setup_team(@team)
-        format.html {redirect_to @team, notice: 'Team was successfully created.'}
-        format.json {render :show, status: :created, location: @team}
+        format.html { redirect_to user_root_url, notice: 'Team was successfully created.' }
+        format.json { render :show, status: :created, location: @team }
       else
-        format.html {render :new}
-        format.json {render json: @team.errors, status: :unprocessable_entity}
+        format.html { render :new }
+        format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -48,11 +53,11 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
-        format.html {redirect_to @team, notice: 'Team was successfully updated.'}
-        format.json {render :show, status: :ok, location: @team}
+        format.html { redirect_to user_root_url, notice: 'Team was successfully updated.' }
+        format.json { render :show, status: :ok, location: @team }
       else
-        format.html {render :edit}
-        format.json {render json: @team.errors, status: :unprocessable_entity}
+        format.html { render :edit }
+        format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,8 +67,8 @@ class TeamsController < ApplicationController
   def destroy
     @team.destroy
     respond_to do |format|
-      format.html {redirect_to teams_url, notice: 'Team was successfully destroyed.'}
-      format.json {head :no_content}
+      format.html { redirect_to user_root_url, notice: 'Team was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
@@ -75,24 +80,19 @@ class TeamsController < ApplicationController
 
   private
 
-  def read_local_server_logs
-    IO.readlines("#{Rails.root}/log/#{Rails.env}.log").last(100)
-  end
-
-  def read_heroku_logs()
-    logs_url = HerokuService.new.create_log_session("lean-elevator-challenge-#{@team.id}")
+  def read_heroku_logs
+    logs_url = HerokuService.new.create_log_session(@team.decider_app.name)
     res = Net::HTTP.get_response(URI.parse(logs_url))
     res.body.split('\n')
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def team_params
-    params.require(:team).permit(:name, :repository, :dsn)
+    params.require(:team).permit(:name, :repository, :app_name)
   end
 
   def setup_team(team)
     service = TeamSetupService.new(team)
     service.run
-    @team.dsn = service.dsn
   end
 end

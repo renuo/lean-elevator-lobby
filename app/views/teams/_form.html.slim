@@ -2,9 +2,14 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :name
-    /= f.input :dsn
-    = f.input :repository
+    .form-group
+      = f.input :name
+    - if @team.new_record?
+      .form-group
+        .input-group
+          span[class= 'input-group-addon'] = 'https://github.com/'
+          = f.input :repository, label: false, placeholder: 'e.g. renuo/lean-elevators-ruby'
+        end
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, class: 'btn btn-primary'

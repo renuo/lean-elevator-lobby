@@ -1,8 +1,15 @@
+- content_for :head do
+  = javascript_include_tag "//www.google.com/jsapi", "chartkick"
+
+
 h1 Lean Elevator Challenge
 
 h2 Statistics
 
-= javascript_include_tag "http://www.google.com/jsapi", "chartkick"
-
 h3 Total Transports per Team
 = line_chart @transports_per_team
+
+h3 Floor States
+
+
+h3 Elevator States

@@ -3,13 +3,23 @@ h1 Lean Elevator Challenge
 - if Round.any?
   h2 Round #{@round_id}
 
-  pre = @output
+  pre#simulator[data-round=@round_id data-round-max=Round.maximum(:id)] = @output
 
   ul.list-inline
     li
-      strong = link_to '<', stats_simulator_path(round_id: @round_id - 1) if @round_id > Round.minimum(:id)
+      - if @round_id > Round.minimum(:id)
+        = link_to stats_simulator_path(round_id: @round_id - 1), class: 'btn btn-primary' do
+          i.fa.fa-step-backward
+          = ' Show Previous'
+        end
     li
-      strong = link_to '>', stats_simulator_path(round_id: @round_id + 1) if @round_id < Round.maximum(:id)
+      - if @round_id < Round.maximum(:id)
+        = link_to stats_simulator_path(round_id: @round_id + 1), class: 'btn btn-primary' do
+          i.fa.fa-step-forward
+          = ' Show Next'
+        end
+        end
+
 
 - else
   p Simulator is not available until the game started.

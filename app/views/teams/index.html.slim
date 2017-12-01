@@ -18,7 +18,7 @@ h1 Listing teams
         tr
           td = team.name
           td = team.repository
-          td = team.dsn
+          td = team.app_name
           td
             ul
               - team.users.pluck(:email).each do |email|

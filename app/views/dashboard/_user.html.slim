@@ -1,1 +1,4 @@
-li = user.email
+- digest = Digest::MD5.hexdigest(user.email.downcase.strip)
+img.img-circle src="https://www.gravatar.com/avatar/#{digest}" alt=user.email title=user.email
+'
+|

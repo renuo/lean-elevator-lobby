@@ -1,0 +1,33 @@
+h1 Play Master View
+
+.panel.panel-default
+  .panel-heading All Registered Apps
+  .panel-body
+    ul
+      - DeciderApp.all.each do |app|
+        li #{link_to(app.name, app.web_url)} by team <i>#{link_to(app.team.name, team_path(app.team))}</i>
+
+ul.list-inline
+  li = link_to 'Stop', game_stop_path, method: :post, class: 'btn btn-primary'
+
+.panel.panel-default
+  .panel-heading Starting a game
+  .panel-body
+    = simple_form_for :start_with_game_config, url: game_start_url do |f|
+      .form-inputs
+        .form-group
+          .input-group
+            = f.input :building_size, as: :integer, input_html: { value: @game_config[:building_size] }
+        .form-group
+          .input-group
+            = f.input :decider_timeout, as: :decimal, input_html: { value: @game_config[:decider_timeout] }
+        .form-group
+          .input-group
+            = f.input :round_delay, as: :integer, input_html: { value: @game_config[:round_delay] }
+        .form-group
+          .input-group
+            = f.input :round_limit, as: :integer, input_html: { value: @game_config[:round_limit] }
+      .form-actions
+        = f.button :submit, class: 'btn btn-primary', value: 'Start'
+
+= render partial: 'shared/live_stats'

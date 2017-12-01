@@ -10,24 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117135246) do
+ActiveRecord::Schema.define(version: 20171127203940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "elevator_states", force: :cascade do |t|
-    t.integer "loaded"
-    t.integer "unloaded"
-    t.integer "total_transported"
-    t.integer "last_level"
-    t.integer "current_level"
+  create_table "building_states", force: :cascade do |t|
+    t.bigint "round_id"
+    t.jsonb "state_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["round_id"], name: "index_building_states_on_round_id"
+  end
+
+  create_table "decider_apps", force: :cascade do |t|
+    t.string "name"
+    t.string "web_url"
+    t.string "git_url"
     t.bigint "team_id"
-    t.bigint "round_id"
-    t.integer "carrying"
-    t.index ["round_id"], name: "index_elevator_states_on_round_id"
-    t.index ["team_id"], name: "index_elevator_states_on_team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_decider_apps_on_team_id"
   end
 
   create_table "rounds", force: :cascade do |t|
@@ -63,7 +66,5 @@ ActiveRecord::Schema.define(version: 20171117135246) do
     t.index ["team_id"], name: "index_users_on_team_id"
   end
 
-  add_foreign_key "elevator_states", "rounds"
-  add_foreign_key "elevator_states", "teams"
   add_foreign_key "users", "teams"
 end
