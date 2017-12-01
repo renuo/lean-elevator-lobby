@@ -51,18 +51,15 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'brakeman', require: false
+  gem 'reek', require: false
+  gem 'rubocop', require: false
+  gem 'scss_lint', require: false
+  gem 'slim_lint', require: false
 end
 
 group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'simplecov', require: false
-end
-
-group :lint do
-  gem 'brakeman', require: false
-  gem 'reek', require: false
-  gem 'rubocop', require: false
-  gem 'scss_lint', require: false
-  gem 'slim_lint', require: false
 end
