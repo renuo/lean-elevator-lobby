@@ -24,3 +24,6 @@
 
 config/application.yml
 .idea
+
+/public/elevators_per_round.csv
+/public/floors_per_round.csv

@@ -49,7 +49,7 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :debug
+  config.log_level = :info
 
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
@@ -91,6 +91,7 @@ Rails.application.configure do
 
   # Don't log a lot in production
   config.lograge.enabled = true
+  # config.active_record.logger = nil
   ActionCable.server.config.logger = Logger.new(nil)
 
   config.active_job.queue_adapter = :sidekiq

@@ -1,4 +1,5 @@
 require 'lean_elevators'
+require 'csv'
 
 class PlayMasterService
   def self.default_setup_options
@@ -19,8 +20,10 @@ class PlayMasterService
   end
 
   def play_rounds
+    persistor = PersistorService.new
+
     LeanElevators.run do |building, tick_number|
-      persist_state(building)
+      persistor.store_state(building)
       ActionCable.server.broadcast('live_stats_channel', building: building.to_s, tick_number: tick_number)
     end
   end
@@ -36,24 +39,5 @@ class PlayMasterService
       config.round_delay = @options[:round_delay].to_i
       config.tick_limit = @options[:round_limit].to_i
     end
-  end
-
-  def persist_state(building)
-    round = Round.create!
-    BuildingState.create!(round: round,
-                          state_data: {
-                            elevators: building.elevators.map do |elevator|
-                              {
-                                floor_number: elevator.floor_number,
-                                people_carrying: elevator.people.count,
-                                people_transported: elevator.statistics
-                              }
-                            end,
-                            floors: building.floors.map do |floor|
-                              {
-                                people_waiting: floor.people.count
-                              }
-                            end
-                          })
   end
 end

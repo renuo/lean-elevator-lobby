@@ -11,11 +11,18 @@ h2 Detailed Round Statistics
         dd = @round_count
 
   .panel.panel-default
-    .panel-heading CSV Data
+    .panel-heading CSV (Last 5 Minutes)
     .panel-body
       ul.list-inline
         li = link_to 'Download Floor States', stats_floor_states_path(format: :csv), class: 'btn btn-primary'
         li = link_to 'Download Elevator States', stats_elevator_states_path(format: :csv), class: 'btn btn-primary'
+
+  .panel.panel-default
+    .panel-heading CSV (The Whole History)
+    .panel-body
+      ul.list-inline
+        li = link_to 'Download Floor States', '/floors_per_round.csv', class: 'btn btn-primary'
+        li = link_to 'Download Elevator States', '/elevators_per_round.csv', class: 'btn btn-primary'
 
 - else
   p No rounds played yet.
