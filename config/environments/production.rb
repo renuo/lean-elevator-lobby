@@ -92,4 +92,6 @@ Rails.application.configure do
   # Don't log a lot in production
   config.lograge.enabled = true
   ActionCable.server.config.logger = Logger.new(nil)
+
+  config.active_job.queue_adapter = :sidekiq
 end

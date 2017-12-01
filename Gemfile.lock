@@ -93,6 +93,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    connection_pool (2.2.1)
     crass (1.0.2)
     database_cleaner (1.6.2)
     debug_inspector (0.0.3)
@@ -182,6 +183,8 @@ GEM
     public_suffix (3.0.0)
     puma (3.10.0)
     rack (2.0.3)
+    rack-protection (2.0.0)
+      rack
     rack-test (0.7.0)
       rack (>= 1.0, < 3)
     rails (5.1.4)
@@ -266,6 +269,11 @@ GEM
       rubyzip (~> 1.0)
     sentry-raven (2.7.1)
       faraday (>= 0.7.6, < 1.0)
+    sidekiq (5.0.5)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      rack-protection (>= 1.5.0)
+      redis (>= 3.3.4, < 5)
     simple_form (3.5.0)
       actionpack (> 4, < 5.2)
       activemodel (> 4, < 5.2)
@@ -369,6 +377,7 @@ DEPENDENCIES
   scss_lint
   selenium-webdriver
   sentry-raven
+  sidekiq
   simple_form
   simplecov
   slim-rails
