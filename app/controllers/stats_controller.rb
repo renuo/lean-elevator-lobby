@@ -6,7 +6,8 @@ class StatsController < ApplicationController
     team_names = Team.all.order(:id).pluck(:name)
     graph_data = []
 
-    building_states = BuildingState.last(200)
+
+    building_states = BuildingState.where('id % 10 = 0').last(200)
 
     building_states.each do |state|
       state.elevators.each_with_index do |_elevator, i|
