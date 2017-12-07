@@ -7,7 +7,7 @@ class StatsController < ApplicationController
     graph_data = []
 
 
-    building_states = BuildingState.where('id % 10 = 0').last(150)
+    building_states = BuildingState.where('id % 10 = 0').last(100)
 
     building_states.each do |state|
       state.elevators.each_with_index do |_elevator, i|
