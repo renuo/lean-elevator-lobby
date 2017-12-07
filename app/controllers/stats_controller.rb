@@ -6,7 +6,8 @@ class StatsController < ApplicationController
     team_names = Team.all.order(:id).pluck(:name)
     graph_data = []
 
-    building_states = BuildingState.last(200)
+
+    building_states = BuildingState.where('id % 10 = 0').last(100)
 
     building_states.each do |state|
       state.elevators.each_with_index do |_elevator, i|
@@ -99,12 +100,12 @@ class StatsController < ApplicationController
 
   def elevator_states_csv_lines(start_at)
     Enumerator.new do |y|
-      y << CSV.generate_line(['Round ID', 'Elevator Number', 'Current Floor', 'People Carrying'])
+      y << CSV.generate_line(['Round ID', 'Elevator Number', 'Current Floor', 'People Carrying', 'Total Transported'])
 
       Round.joins(:building_state).includes(:building_state)
           .where('rounds.created_at > ?', start_at).find_each.lazy.each do |round|
         round.building_state.elevators.each_with_index do |elevator, i|
-          y << CSV.generate_line([round.id, i, elevator.floor_number, elevator.people_carrying])
+          y << CSV.generate_line([round.id, i, elevator.floor_number, elevator.people_carrying, elevator.people_transported])
         end
       end
     end
