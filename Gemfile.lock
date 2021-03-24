@@ -394,7 +394,7 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 RUBY VERSION
-   ruby 2.4.2p198
+   ruby 2.5.8p224
 
 BUNDLED WITH
-   1.16.0
+   2.2.15
